@@ -1,6 +1,7 @@
 package com.example.vudai_motor_show.model;
 
 import lombok.Data;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,5 +17,6 @@ public class Color {
     private Long id;
 
     @NotNull
+    @NaturalId(mutable = true)
     private String color;
 }

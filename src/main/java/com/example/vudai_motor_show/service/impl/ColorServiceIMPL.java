@@ -26,4 +26,9 @@ public class ColorServiceIMPL implements IColorService {
     public void save(Color color) {
         colorRepo.save(color);
     }
+
+    @Override
+    public boolean existByColor(String color) {
+        return colorRepo.existsByColor(color);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.vudai_motor_show.controller;
 
+import com.example.vudai_motor_show.dto.response.ResponseMessage;
 import com.example.vudai_motor_show.model.Color;
 import com.example.vudai_motor_show.service.impl.ColorServiceIMPL;
 import lombok.AllArgsConstructor;
@@ -28,14 +29,22 @@ public class ColorController {
 
     @PostMapping
     public ResponseEntity<?> createColor(@RequestBody Color color){
-        colorService.save(color);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (colorService.existByColor(color.getColor())){
+            return new ResponseEntity<>(new ResponseMessage("color name existed"), HttpStatus.OK);
+        }else {
+            colorService.save(color);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @PutMapping
     public ResponseEntity<?> editColor(@RequestBody Color color){
-        colorService.save(color);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (colorService.existByColor(color.getColor())){
+            return new ResponseEntity<>(new ResponseMessage("color name existed"), HttpStatus.OK);
+        }else {
+            colorService.save(color);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
 }
