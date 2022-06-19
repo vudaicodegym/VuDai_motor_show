@@ -2,6 +2,7 @@ package com.example.vudai_motor_show.controller;
 
 import com.example.vudai_motor_show.dto.response.ResponseMessage;
 import com.example.vudai_motor_show.model.Color;
+import com.example.vudai_motor_show.service.IColorService;
 import com.example.vudai_motor_show.service.impl.ColorServiceIMPL;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/color")
 public class ColorController {
-    ColorServiceIMPL colorService;
+    IColorService colorService;
 
     @GetMapping
     public ResponseEntity<List<Color>> getAllColor(){
@@ -23,8 +24,13 @@ public class ColorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Color> getColorByID(@PathVariable("id") Long id){
-        return new ResponseEntity<>(colorService.getColorByID(id), HttpStatus.OK);
+    public ResponseEntity<?> getColorByID(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(colorService.getColorByID(id), HttpStatus.OK);
+        }catch (Exception e){
+            System.err.println(e);
+            return new ResponseEntity<>(new ResponseMessage("Can't find this color"), HttpStatus.OK);
+        }
     }
 
     @PostMapping

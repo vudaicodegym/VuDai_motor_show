@@ -2,6 +2,7 @@ package com.example.vudai_motor_show.controller;
 
 import com.example.vudai_motor_show.dto.response.ResponseMessage;
 import com.example.vudai_motor_show.model.Brand;
+import com.example.vudai_motor_show.service.IBrandService;
 import com.example.vudai_motor_show.service.impl.BrandServiceIMPL;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,14 +16,19 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/brand")
 public class BrandController {
-    BrandServiceIMPL brandService;
+    IBrandService brandService;
     @GetMapping
     public ResponseEntity<List<Brand>> findAll() {
         return new ResponseEntity<>(brandService.findALl(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Brand> findById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(brandService.findBrandById(id), HttpStatus.OK);
+    public ResponseEntity<?> findById(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(brandService.findBrandById(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseMessage("can not find this brand"), HttpStatus.OK);
+        }
+
     }
 
     @PostMapping
