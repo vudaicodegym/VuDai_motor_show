@@ -35,8 +35,8 @@ public class ColorController {
 
     @PostMapping
     public ResponseEntity<?> createColor(@RequestBody Color color){
-        if (colorService.existByColor(color.getColor())){
-            return new ResponseEntity<>(new ResponseMessage("color name existed"), HttpStatus.OK);
+        if (colorService.existByColor(color.getColor()) || color.getId() != null){
+            return new ResponseEntity<>(new ResponseMessage("color existed"), HttpStatus.OK);
         }else {
             colorService.save(color);
             return new ResponseEntity<>(HttpStatus.OK);

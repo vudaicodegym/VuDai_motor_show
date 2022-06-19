@@ -33,8 +33,8 @@ public class BrandController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Brand brand){
-        if (brandService.existsByBrandName(brand.getBrandName())){
-            return new ResponseEntity<>(new ResponseMessage("brand name existed"), HttpStatus.OK);
+        if (brandService.existsByBrandName(brand.getBrandName()) || brand.getId() != null){
+            return new ResponseEntity<>(new ResponseMessage("brand existed"), HttpStatus.OK);
         }else {
             brandService.save(brand);
             return new ResponseEntity<>(HttpStatus.OK);
