@@ -14,11 +14,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @NotNull
     private Model model;
 
     @NotNull
+    @Min(0)
     private Double price;
 
     @NotNull
